@@ -13,7 +13,7 @@
           this.categorias = await obterCategorias()
         }, 
         components: { CardCategoria, BotaoPrincipal },
-        emits: ['adicionarIngrediente', 'removerIngrediente']
+        emits: ['adicionarIngrediente', 'removerIngrediente', 'buscaReceitas']
     }
 </script>
 
@@ -30,17 +30,15 @@
               <CardCategoria 
                 :categoria="categoria"
                 @adicionar-ingrediente="$emit('adicionarIngrediente', $event)"
-                @remover-ingrediente="$emit('removerIngrediente', $event)"
-              />
+                @remover-ingrediente="$emit('removerIngrediente', $event)"/>
             </li>
-
         </ul>
 
         <p class="paragrafo dica">
             *Atenção: consideramos que você tem em casa sal, pimenta e água.
         </p>
 
-        <BotaoPrincipal texto="Buscar receitas!" />
+        <BotaoPrincipal texto="Buscar receitas!" @click="$emit('buscaReceitas')"/>
     </section>
 </template>
 
