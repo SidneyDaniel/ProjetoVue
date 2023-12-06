@@ -1,38 +1,33 @@
 <script lang="ts">
 import SelecionarIngredientes from './SelecionarIngredientes.vue';
+import SuaLista from './SuaLista.vue';
 import Tag from './Tag.vue';
 
     export default {
     data() {
         return {
-            ingredientes: ['Alho', 'Manteiga', 'Orégano']
+            ingredientes: [] as string[]
         };
     },
-    components: { SelecionarIngredientes, Tag }
+    components: { SelecionarIngredientes, SuaLista, Tag },
+    methods:{
+      adicionarIngrediente(ingrediente: string){
+        this.ingredientes.push(ingrediente)
+      },
+      removerIngrediente(ingrediente: string) {
+        this.ingredientes = this.ingredientes.filter(iLista => ingrediente !== iLista);
+      }
+    }
 }
 </script>
 
 <template>
    <main class="conteudo-principal">
-    <section>
-        <span class="subtitulo-lg sua-lista-texto">
-            Sua lista:
-        </span>
-
-        <ul v-if="ingredientes.length" class="ingredientes-sua-lista">
-            <li v-for="ingrediente in ingredientes" :key="ingrediente">
-                <Tag :texto="ingrediente"/>
-            </li>
-        </ul>
-
-        <p v-else class="paragrafo lista-vazia">
-            <img src="../assets/images/icones/lista-vazia.svg" alt="ícone de pesquisa">
-            Sua lista está vazia, selecione ingrediente para iniciar. 
-        </p>
-
-    </section>
-
-    <SelecionarIngredientes/>
+    <SuaLista :ingredientes="ingredientes"/>
+    <SelecionarIngredientes
+    @adicionar-ingrediente="adicionarIngrediente"
+    @remover-ingrediente="removerIngrediente"/>
+    
    </main>
 </template>
 
@@ -49,32 +44,6 @@ import Tag from './Tag.vue';
   gap: 5rem;
 }
 
-.sua-lista-texto {
-  color: var(--coral, #F0633C);
-  display: block;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.ingredientes-sua-lista {
-  display: flex;
-  justify-content: center;
-  gap: 1rem 1.5rem;
-  flex-wrap: wrap;
-}
-
-
-
-.lista-vazia {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-
-  color: var(--coral, #F0633C);
-  text-align: center;
-}
 
 @media only screen and (max-width: 1300px) {
   .conteudo-principal {
